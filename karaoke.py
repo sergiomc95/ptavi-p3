@@ -8,6 +8,7 @@ import json
 import urllib.request
 from smallsmilhandler import SmallSMILHandler
 
+
 class KaraokeLocal():
     def Inicializador(self, fichero):
         self.cHandler = SmallSMILHandler()
@@ -27,9 +28,12 @@ class KaraokeLocal():
         for elementos in datos:
             for etiqueta in elementos:
                 for atributo, valor in elementos[etiqueta].items():
-                        salida = salida + '\t' + atributo + ' = "' + valor + '"\t'
+                        salida = salida + '\t' + atributo + ' = "'
+                        + valor + '"\t'
+
             print(etiqueta + salida)
             salida = ""
+
     def do_local(self, datos):
         salida = ""
         for elementos in datos:
@@ -38,14 +42,17 @@ class KaraokeLocal():
                     if (atributo == 'src') and (valor[0:7] == 'http://'):
                         valorNuevo = valor.split("/")[-1]
                         urllib.request.urlretrieve(valor, valorNuevo)
-                        salida = salida + '\t' + atributo + '="' + valorNuevo + '"\t'
+                        salida = salida + '\t' + atributo + '="'
+                        + valorNuevo + '"\t'
                     else:
-                        salida = salida + '\t' + atributo + ' = "' + valor + '"\t'
+                        salida = salida + '\t' + atributo + ' = "'
+                        + valor + '"\t'
             print(etiqueta + salida)
             salida = ""
 
     def to_json(self, datos):
         json.dump(datos, open('karaoke.json', 'w'))
+
 
 if __name__ == "__main__":
 
