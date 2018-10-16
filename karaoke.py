@@ -6,7 +6,7 @@ from xml.sax.handler import ContentHandler
 import sys
 import json
 from smallsmilhandler import SmallSMILHandler
-
+import urllib.request
 if __name__ == "__main__":
 
     parser = make_parser()
@@ -22,10 +22,15 @@ if __name__ == "__main__":
     salida = ""
     for datos in misdatos:
         for etiqueta in datos:
+                    for atributo, valor in datos[etiqueta].items():
+                        if (atributo == 'src') and (valor[0:7] == 'http://'):
+                            valorNuevo = valor.split("/")[-1]
+                            urllib.request.urlretrieve(valor, valorNuevo)
+                            salida = salida + '\t' + atributo + '="' + valorNuevo + '"\t'
 
-                for atributo, valor in datos[etiqueta].items():
+                        else:
 
-                    salida = salida + '\t' + atributo + ' = "' + valor + '"\t'
+                            salida = salida + '\t' + atributo + ' = "' + valor + '"\t'
         print(etiqueta + salida)
         salida = ""
     json.dump(misdatos, open('karaoke.json', 'w'))
