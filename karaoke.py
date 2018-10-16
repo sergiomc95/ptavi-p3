@@ -27,6 +27,14 @@ class KaraokeLocal():
         for elementos in datos:
             for etiqueta in elementos:
                 for atributo, valor in elementos[etiqueta].items():
+                        salida = salida + '\t' + atributo + ' = "' + valor + '"\t'
+            print(etiqueta + salida)
+            salida = ""
+    def do_local(self, datos):
+        salida = ""
+        for elementos in datos:
+            for etiqueta in elementos:
+                for atributo, valor in elementos[etiqueta].items():
                     if (atributo == 'src') and (valor[0:7] == 'http://'):
                         valorNuevo = valor.split("/")[-1]
                         urllib.request.urlretrieve(valor, valorNuevo)
@@ -51,4 +59,5 @@ if __name__ == "__main__":
 
     datos = objKaraokeLocal.Inicializador(fichero)
     objKaraokeLocal.toStr(datos)
+    objKaraokeLocal.do_local(datos)
 objKaraokeLocal.to_json(datos)
