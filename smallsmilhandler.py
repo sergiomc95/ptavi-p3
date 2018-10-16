@@ -5,6 +5,7 @@ from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 import sys
 
+
 class SmallSMILHandler(ContentHandler):
 
     def __init__(self):
@@ -27,7 +28,8 @@ class SmallSMILHandler(ContentHandler):
         if etiqueta == 'root-layout':
             rootlayout = {'rootlayout': ({'width': attrs.get('width', ""),
                                           'height': attrs.get('height', ""),
-                                          'background-color': attrs.get('background-color')})}
+                                          'background-color':
+                                          attrs.get('background-color')})}
             self.misdatos.append(rootlayout)
         elif etiqueta == 'region':
             region = {'region': ({'id': attrs.get('id', ""),
@@ -53,6 +55,7 @@ class SmallSMILHandler(ContentHandler):
 
     def get_tags(self):
         return self.misdatos
+
 
 if __name__ == "__main__":
 
